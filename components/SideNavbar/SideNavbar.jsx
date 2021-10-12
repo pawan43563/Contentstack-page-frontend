@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './SideNavbar.module.scss';
-
+import Loader from 'react-loader-spinner';
 export default function SideNavbar({navData,setisMenuOpened}){
     // console.log("Sidenavbar",navData);
     const {navbar_data}=navData
@@ -10,16 +10,18 @@ export default function SideNavbar({navData,setisMenuOpened}){
                 <a href="#" className={styles.docu}>Documentation</a>
                 <a href="#">Login</a>
             {
-                navbar_data.map((e,i)=>(
+                navbar_data.length>0?
+                navbar_data.map((e)=>(
                     <>
-                        <a href={e.main_link.href} key={i} className={e.iscta?styles.btn:styles.navLink}>{e.main_link.title}</a>
+                        <a key={e.main_link.title} href={e.main_link.href} className={e.iscta?styles.btn:styles.navLink}>{e.main_link.title}</a>
                         {
-                            e.sub_right_field.map((e1,i)=>(
-                                <a className={styles.navLinkMain} key={i} href={e1.link.href}>{e1.link.title}</a>
+                            e.sub_right_field.map((e1,i1)=>(
+                                <a key={i1} className={styles.navLinkMain}  href={e1.link.href}>{e1.link.title}</a>
                             ))
                         }
                     </>
-                ))
+                )):
+                <Loader type="ThreeDots" color="black" height="100" width="100" />
             }
             </div>
             <div className={styles.cross} onClick={()=>{setisMenuOpened(false)}}>

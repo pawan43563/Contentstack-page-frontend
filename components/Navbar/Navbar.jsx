@@ -1,7 +1,7 @@
 import { useState ,useRef} from 'react';
 import styles from './Navbar.module.scss';
-
-export default function Navbar({navData,setisMenuOpened,isMenuOpened}){
+import Loader from 'react-loader-spinner';
+export default function Navbar({navData,setisMenuOpened,isMenuOpened,isLoggedin}){
     // console.log("Navbar",navData);
     const {navbar_data,navbar_logo}=navData;
     const [colorChange, setColorchange] = useState(false);
@@ -39,16 +39,17 @@ export default function Navbar({navData,setisMenuOpened,isMenuOpened}){
 
 
     return(
-        <div className={styles.containernav} style={{background:colorChange?"#614FB9":"transparent"}}>
+        isLoggedin===true && (
+            <div className={styles.containernav} style={{background:colorChange?"#614FB9":"transparent"}}>
             <div className={styles.navigationBar} >
-                <div className={styles.companyLogo}>
+                <div className={styles.companyLogo} >
                     <img src={navbar_logo.url} alt="Contentstack logo" />
                 </div>
-                
                 <ul className={styles.navContainer}>
                     {
+                        navbar_data.length>0?
                         navbar_data.map((e,i)=>(
-                            <li className={styles.navItem} key={i} id={e.main_link.title}  onMouseLeave={handleMouseLeave}>
+                            <li className={styles.navItem} key={e.main_link.title} id={e.main_link.title}  onMouseLeave={handleMouseLeave}>
                                 <a href={e.main_link.href} id={e.main_link.title}  className={e.iscta?styles.btn:styles.navLink}  onMouseOver={handleMouseOver}>{e.main_link.title}</a>
                                 {
                                     !e.iscta&&showdropdown === e.main_link.title&&
@@ -63,7 +64,7 @@ export default function Navbar({navData,setisMenuOpened,isMenuOpened}){
                                             <ul>
                                                 {
                                                     e.sub_right_field.map((e,i)=>(
-                                                        <li key={i}>
+                                                        <li key={e.link.title}>
                                                             <a href={e.link.href}>{e.link.title}</a>
                                                         </li>
                                                     ))
@@ -75,8 +76,8 @@ export default function Navbar({navData,setisMenuOpened,isMenuOpened}){
                                 }
                                 
                             </li>
-                        ))
-                        
+                        )):
+                        <Loader type="ThreeDots" color="black" height="100" width="100" />
                     }
                     
                 </ul>
@@ -89,6 +90,8 @@ export default function Navbar({navData,setisMenuOpened,isMenuOpened}){
                 </div>
             </div>
         </div>
+        )
+        
     )
 }
 

@@ -2,6 +2,7 @@ import styles from './Clients.module.scss';
 import Slider from 'react-slick';
 import "slick-carousel/slick/slick.css";
 // import "slick-carousel/slick/slick-theme.css";
+import Loader from 'react-loader-spinner';
 
 function SampleNextArrow(props) {
     const {  onClick } = props;
@@ -54,12 +55,14 @@ export default function Client({clientimages}){
         <div className={styles.clientContainer} >
             <Slider {...settings} className={styles.slider} style={{display:"flex"}}>
                     {
+                        company_clients_logo.length>0?
                         company_clients_logo.map((e,i)=>(
                             <div className={styles.clientSlider} key={i}>
                                 <img src={e.company_logo.url} alt="Clients Logo" />
                             </div>
                             
-                        ))
+                        )):
+                        <Loader type="ThreeDots" color="black" height="100" width="100" />
                     }
                 
             </Slider>

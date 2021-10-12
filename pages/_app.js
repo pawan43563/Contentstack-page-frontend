@@ -1,17 +1,19 @@
 import '../styles/globals.css'
 import Navbar from '../components/Navbar/Navbar'
 import Footer from '../components/Footer/Footer';
-import { apicall } from '../utils/apiCall'
 import Head from 'next/head';
+import {apicall} from '../utils/apiCall'
 import { useState } from 'react';
 import SideNavbar from '../components/SideNavbar/SideNavbar';
+
+
 
 
 
 function MyApp({ Component, pageProps,navData,footerData }) {
 
   const [isMenuOpened,setisMenuOpened]=useState(false)
-
+  const [isLoggedin,setLoggedin]=useState(false)
 
   return (
     <>
@@ -23,12 +25,14 @@ function MyApp({ Component, pageProps,navData,footerData }) {
       <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin='true'/>
       <link href="https://fonts.googleapis.com/css2?family=Recursive:wght@300&family=Saira+Semi+Condensed&display=swap" rel="stylesheet"></link>
     </Head>
-    <Navbar navData={navData} setisMenuOpened={setisMenuOpened} isMenuOpened={isMenuOpened} />
-      {
-        isMenuOpened===true && <SideNavbar navData={navData} setisMenuOpened={setisMenuOpened} />
-      }
-      <Component {...pageProps} />
-    <Footer footerData={footerData} />
+    {
+      <>
+        <Navbar navData={navData} isLoggedin={isLoggedin} setisMenuOpened={setisMenuOpened} isMenuOpened={isMenuOpened} />
+          {isMenuOpened===true && <SideNavbar navData={navData} setisMenuOpened={setisMenuOpened} />}
+        <Component {...pageProps} setLoggedin={setLoggedin} />
+        <Footer footerData={footerData} isLoggedin={isLoggedin}/>
+      </>
+    }
 
     </>
   )
@@ -45,6 +49,7 @@ MyApp.getInitialProps=async ()=>{
     }
   }
   const navData=await apicall({url:navbarurl,obj:obj});
+
 
   let footerurl="https://arcane-mesa-67533.herokuapp.com/footer"
 

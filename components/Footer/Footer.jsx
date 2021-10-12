@@ -1,24 +1,30 @@
 import styles from './Footer.module.scss';
+import Loader from 'react-loader-spinner';
 
-export default function Footer({footerData}){
-    // console.log("Footer ",footerData);
+export default function Footer({footerData,isLoggedin}){
     const {contentstack_logo,footer_data,social_link,terms}=footerData;
-
+    
+    
     return(
-        <div className={styles.container}>
+        isLoggedin===true && (
+            <div className={styles.container}>
             <div className={styles.footerContainer}>
             <div className={styles.footersocial}>
                 <img src={contentstack_logo.url} alt="Contentstack logo" />
                 <div className={styles.links}>
-                    <i className="fa fa-facebook"></i>
-                    <i className="fa fa-youtube"></i>
-                    <i className="fa fa-linkedin"></i>
-                    <i className="fa fa-github"></i>
-                    <i className="fa fa-twitter"></i>
+                    {
+                        social_link.length>0?
+                        social_link.map((e,i)=>(
+                            <i className={`fa fa-${e.title}`} href={e.href} key ={e.title}></i>
+                        )):
+                        <Loader type="ThreeDots" color="black" height="100" width="100" />
+                    }
+
                 </div>
             </div>
             <div className={styles.footerinfo}>
-                {
+                {   
+                    footer_data.length>0 ?
                     footer_data.map((e,i)=>(
                         <div className={styles.main} key={i}>
                         <h2>{e.field_name}</h2>
@@ -28,7 +34,8 @@ export default function Footer({footerData}){
                             ))
                         }
                         </div>
-                    ))
+                    )):
+                    <Loader type="ThreeDots" color="black" height="100" width="100" />
                 }
             </div>
         </div>
@@ -40,6 +47,6 @@ export default function Footer({footerData}){
             }
         </div>
         </div>
-        
+    )       
     )
 }
