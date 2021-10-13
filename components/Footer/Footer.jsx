@@ -2,7 +2,7 @@ import styles from './Footer.module.scss';
 import Loader from 'react-loader-spinner';
 
 export default function Footer({footerData,isLoggedin}){
-    const {contentstack_logo,footer_data,social_link,terms}=footerData;
+    const {contentstack_logo,footer_data,social_link,terms}=footerData[0];
     
     
     return(

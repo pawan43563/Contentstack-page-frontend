@@ -1,9 +1,11 @@
 import { useState ,useRef} from 'react';
 import styles from './Navbar.module.scss';
 import Loader from 'react-loader-spinner';
+import Button from '../Button/Button';
+
 export default function Navbar({navData,setisMenuOpened,isMenuOpened,isLoggedin}){
     // console.log("Navbar",navData);
-    const {navbar_data,navbar_logo}=navData;
+    const {navbar_data,navbar_logo}=navData[0];
     const [colorChange, setColorchange] = useState(false);
     const [showdropdown,setdropdown] = useState("");
 
@@ -50,7 +52,12 @@ export default function Navbar({navData,setisMenuOpened,isMenuOpened,isLoggedin}
                         navbar_data.length>0?
                         navbar_data.map((e,i)=>(
                             <li className={styles.navItem} key={e.main_link.title} id={e.main_link.title}  onMouseLeave={handleMouseLeave}>
-                                <a href={e.main_link.href} id={e.main_link.title}  className={e.iscta?styles.btn:styles.navLink}  onMouseOver={handleMouseOver}>{e.main_link.title}</a>
+                                {
+                                    e.iscta?(
+                                        <Button cls="redtransparentbtn" link={e.main_link.href} content={e.main_link.title} onMouseOver={handleMouseOver} />
+                                    ):
+                                    <>
+                                        <a href={e.main_link.href} id={e.main_link.title}  className={styles.navLink}  onMouseOver={handleMouseOver}>{e.main_link.title}</a>
                                 {
                                     !e.iscta&&showdropdown === e.main_link.title&&
                                     <div className={styles.dropdownmenu} >
@@ -74,6 +81,9 @@ export default function Navbar({navData,setisMenuOpened,isMenuOpened,isLoggedin}
                                         </div>
                                     </div>    
                                 }
+                                    </>
+                                }
+                                
                                 
                             </li>
                         )):

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import styles from './Banner.module.scss';
+import Button from '../Button/Button';
 
 export default function Banner({bannerData}){
     // console.log("Banner",bannerData);
@@ -29,7 +30,7 @@ export default function Banner({bannerData}){
                     <div className={styles.bannerSide}>
                         <h3>{banner_heading}</h3>
                         <p>{banner_sub_heading}</p>
-                        <a href={video.video_file}>{video.video_title}</a>
+                        <Button cls="yellowtransparentbtn" link={video.video_file} content={video.video_title} />
                     </div>
                     <div className={styles.taglineside}>
                         {banner_tagline}

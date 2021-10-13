@@ -48,12 +48,13 @@ MyApp.getInitialProps=async ()=>{
       'Content-Type':"application/json"
     }
   }
-  const navData=await apicall({url:navbarurl,obj:obj});
-
+  let navData=await apicall({url:navbarurl,obj:obj});
+  navData=navData[0]
 
   let footerurl="https://arcane-mesa-67533.herokuapp.com/footer"
 
-  const footerData=await apicall({url:footerurl,obj:obj})
+  let footerData=await apicall({url:footerurl,obj:obj});
+  footerData=footerData[0];
 
   return {navData,footerData}
 }

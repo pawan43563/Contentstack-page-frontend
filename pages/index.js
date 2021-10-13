@@ -37,10 +37,7 @@ export const getStaticProps=async()=>{
     }
   }
   let homepagedata=await apicall({url:homepageurl,obj:obj})
-
-  let {banner,client_logos,market_recognition}=homepagedata
-
-
+  let {banner,client_logos,market_recognition}=homepagedata[0][0]
   return {
     props:{
       bannerdata:banner[0],

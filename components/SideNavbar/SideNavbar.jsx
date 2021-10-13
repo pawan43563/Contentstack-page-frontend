@@ -1,9 +1,10 @@
 import React from 'react';
 import styles from './SideNavbar.module.scss';
 import Loader from 'react-loader-spinner';
+import Button from '../Button/Button'
 export default function SideNavbar({navData,setisMenuOpened}){
     // console.log("Sidenavbar",navData);
-    const {navbar_data}=navData
+    const {navbar_data}=navData[0]
     return (
         <div className={styles.sidenavbarContainer}>
             <div className={styles.sidenavbarContent}>
@@ -13,11 +14,20 @@ export default function SideNavbar({navData,setisMenuOpened}){
                 navbar_data.length>0?
                 navbar_data.map((e)=>(
                     <>
-                        <a key={e.main_link.title} href={e.main_link.href} className={e.iscta?styles.btn:styles.navLink}>{e.main_link.title}</a>
                         {
-                            e.sub_right_field.map((e1,i1)=>(
-                                <a key={i1} className={styles.navLinkMain}  href={e1.link.href}>{e1.link.title}</a>
-                            ))
+                            e.iscta?(
+                            <Button cls="redtransparentbtn" link={e.main_link.href} content={e.main_link.title}/>
+                            )
+                            :
+                            <>
+                            <a key={e.main_link.title} href={e.main_link.href} className={e.iscta?styles.btn:styles.navLink}>{e.main_link.title}</a>
+                            {
+                                e.sub_right_field.map((e1,i1)=>(
+                                    <a key={i1} className={styles.navLinkMain}  href={e1.link.href}>{e1.link.title}</a>
+                                ))
+                            }
+                            </>
+
                         }
                     </>
                 )):
